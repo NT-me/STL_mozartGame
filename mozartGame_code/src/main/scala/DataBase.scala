@@ -9,7 +9,6 @@ object DataBaseActor {
  	case class Note (pitch:Int, dur:Int, vol:Int) extends ObjetMusical
  	case class Chord (date:Int, notes:List[Note]) extends ObjetMusical
  	case class Measure (chords:List[Chord]) extends ObjetMusical
- 
  	case class GetMeasure (num:Int)
  	case class Start()
 
@@ -1148,11 +1147,9 @@ Chord  (791 , List (Note(55 ,201, 71))),
 Chord  (992 , List (Note(59 ,200, 83))),
 Chord  (1200 , List (Note(52 ,198, 98))),
 Chord  (1391 , List (Note(55 ,201, 78))),
-Chord  (1592 , List (Note(59 ,193, 88)))))) 
+Chord  (1592 , List (Note(59 ,193, 88))))))
 
 val measures : List [Measure] = measures1 ::: measures2
 }
 
 //////////////////////////
-
-

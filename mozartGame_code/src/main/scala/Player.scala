@@ -14,7 +14,7 @@ import akka.actor.{Props, Actor, ActorRef, ActorSystem}
 
 
 object PlayerActor {
-  case class MidiNote (pitch:Int, vel:Int, dur:Int, at:Int) 
+  case class MidiNote (pitch:Int, vel:Int, dur:Int, at:Int)
   val info = MidiSystem.getMidiDeviceInfo().filter(_.getName == "Gervill").headOption
   // or "SimpleSynth virtual input" or "Gervill"
   val device = info.map(MidiSystem.getMidiDevice).getOrElse {
@@ -48,7 +48,17 @@ class PlayerActor () extends Actor{
 
   def receive = {
     case Measure (l) => {
-      println("jouer ici une measure")
+      var i = 0
+      for (i <- 0 to l.size-1){
+        val cursorChord = l(i)
+        val at = cursorChord.date
+
+        var j = 0
+        for (j <- 0 to cursorChord.notes.size-1){
+          val cursorNote = cursorChord.notes(j)
+            context.self ! MidiNote(cursorNote.pitch, cursorNote.vol, cursorNote.dur, at)
+        }
+      }
     }
     case MidiNote(p,v, d, at) => {
       context.system.scheduler.scheduleOnce ((at) milliseconds) (note_on (p,v,10))
@@ -56,4 +66,3 @@ class PlayerActor () extends Actor{
     }
   }
 }
-
