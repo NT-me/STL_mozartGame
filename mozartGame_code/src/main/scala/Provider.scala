@@ -57,20 +57,19 @@ class ProviderActor (db: ActorRef) extends Actor{
   def receive = {
     case getMeasure(result) => {
       constructorAdrr = sender
-      val mesID = -1
       if (tab1){
-        db ! GetMeasure(result)
+        db ! GetMeasure(partie1(result)(cpt))
 
         cpt += 1
-        if (cpt > 8){
+        if (cpt > 7){
           tab1 = false
           cpt = 0
         }
       }
       else{
-        db ! GetMeasure(result)
+        db ! GetMeasure(partie2(result)(cpt))
         cpt += 1
-        if (cpt > 8){
+        if (cpt > 7){
           tab1 = true
           cpt = 0
         }

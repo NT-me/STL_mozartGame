@@ -28,7 +28,7 @@ class ConductorActor (provider: ActorRef, player: ActorRef) extends Actor{
   def receive = {
     case StartGame () => {
       val r = scala.util.Random
-      provider ! getMeasure(r.nextInt(12))
+      provider ! getMeasure(r.nextInt(11))
     }
 
     case giveMeasure(chords: List [Chord]) =>{
